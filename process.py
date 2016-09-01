@@ -59,18 +59,14 @@ for i in master['ID']:
      lnprob = lnprob[probmask]
      sample = sample[probmask]
  
-     #weight remaining walkers by probability.
-     for k in range(len(sample)):
-        sample[k] = N.exp(lnprob[k])*sample[k]     
-
      #change sample format from [[x_1,y_2],[x_2,y_2]....] to [x_1,x_2,x_3,..],[y_1,y_2,y_3,...]
      #for hist2d plot.
      samp = N.transpose(sample)
      x = samp[:1].flatten()
      y = samp[1:2].flatten()
      
-     #calaculate normalised bin heights for walkers in one sample.
-     Hcurrent =  N.histogram2d(x, y, range=[[0,14],[0,5.0]],bins=BINS)[0]
+     #calaculate normalised bin heights for walkers in one sample, weight by lnprob.
+     Hcurrent =  N.histogram2d(x, y, range=[[0,14],[0,5.0]],bins=BINS,weights=N.exp(lnprob[:]),normed=True)[0]
      
      #remove extreme outlier bing hieghts
      if Hcurrent.max() < 200:
