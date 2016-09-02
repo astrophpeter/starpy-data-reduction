@@ -1,3 +1,9 @@
+#############################################
+## Peter McGill September 2016             ##
+## Code to analyse multiple starpy outputs ##
+#############################################
+
+
 from astropy.table import Table
 import os.path
 import numpy
@@ -10,6 +16,8 @@ import numpy as N
 smoothCol= 't01_smooth_or_features_a01_smooth_weighted_fraction'
 featureCol = 't01_smooth_or_features_a02_features_or_disk_weighted_fraction'
 master = Table.read('GZ+UVISTA.fits',format='fits')
+
+#ranges
 BINS = 150
 PROB = N.log(0.2)
 TAUMIN = 0
@@ -18,13 +26,12 @@ TQMIN = 0
 TQMAX = 14
 
 #redshift cut
-#zmask1 = master['z_peak'] > 0.0
-#zmask2 = master['z_peak'] < 0.5
+zmask1 = master['z_peak'] > 0.0
+zmask2 = master['z_peak'] < 0.5
 #s/n >5
-#usemask = master['USE_1'] == 1
-#mask = (zmask1 == 1) & (zmask2 == 1) & (usemask == 1)
-
-#master = master[mask]
+usemask = master['USE_1'] == 1
+mask = (zmask1 == 1) & (zmask2 == 1) & (usemask == 1)
+master = master[mask]
 
 
 #for monitering progress out ouput.
