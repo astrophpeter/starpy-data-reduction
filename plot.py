@@ -14,7 +14,9 @@ TAUMIN = 0
 TQMAX = 14
 TQMIN = 0
 BINS = 150
+
 #data processing
+#create uniform 2d hist for output weights to be overlaid.
 dat = [[i,j] for i in N.arange(TQMAX/BINS,TQMAX+TQMAX/BINS,TQMAX/BINS) for j in N.arange(TAUMAX/BINS,TAUMAX+TAUMAX/BINS,TAUMAX/BINS)]
 dat = N.transpose(dat)
 x = dat[:1].flatten()
