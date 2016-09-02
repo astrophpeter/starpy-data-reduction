@@ -1,3 +1,9 @@
+#########################################
+# Peter McGill September 2016           #
+# code to plot multi output from starpy #
+#########################################
+
+
 import numpy as N
 import corner as c
 import matplotlib.pyplot as plt
@@ -24,11 +30,12 @@ y = dat[1:2].flatten()
 
 
 
-weighted = N.load('out.npy')
+weighted = N.load('data/z-0.5-1-smooth.npy')
 #tq_mcmc, tau_mcmc,  = map(lambda v: (v[1], v[2]-v[1], v[1]-v[0]), zip(*N.percentile(samples, [16,50,84],axis=0    )))
 
 weighted = weighted.flatten()
 
+#set up grid for 2d hist and marginal 1d hists.
 gs1 = gridspec.GridSpec(2,2,width_ratios=[3,1],
                        height_ratios=[1,3])
 axScatter = plt.subplot(gs1[2])
@@ -53,6 +60,7 @@ axHistY.yaxis.set_major_formatter( NullFormatter() )
 #axPic.imshow(img)
 #axPic.axis('off')
 
+#plot histogram
 c.hist2d(x,y,ax=axScatter,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=BINS,max_n_ticks=8,normed=True)
 
 #axScatter.hist2d(x,y,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=150,normed=True)

@@ -41,8 +41,6 @@ j=1;
 #create key to table row.
 dict = dict(zip(master['ID'],numpy.arange(len(master['ID']))))
 
-#print(master['z_peak'][dict[195754]])
-
 #initalize output data
 H = N.zeros((BINS,BINS))
 
