@@ -6,12 +6,12 @@ import matplotlib.gridspec as gridspec
 import matplotlib.image as mpimg
 plt.style.use('idl.mplstyle')
 plt.figure(figsize=(6.95,6.8))
-img = mpimg.imread('201052.jpg')
+#img = mpimg.imread('201052.jpg')
 
 #definelims
 TAUMAX = 4
 TAUMIN = 0
-TQMAX = 8.5
+TQMAX = 14
 TQMIN = 0
 BINS = 150
 #data processing
@@ -53,11 +53,11 @@ axHistY.yaxis.set_major_formatter( NullFormatter() )
 
 c.hist2d(x,y,ax=axScatter,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=BINS,max_n_ticks=8,normed=True)
 
-#axScatter.hist2d(x,y,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=120,normed=True)
+#axScatter.hist2d(x,y,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=150,normed=True)
 #axScatter.plot([tq_mcmc[0],tq_mcmc[0]],[0,5],color='blue')
 #axScatter.plot([0,100],[tau_mcmc[0],tau_mcmc[0]],color='blue')
 
-axHistX.hist(x,BINS,color='black', histtype='step',normed=True,weights=weighted)
-axHistY.hist(y,BINS,color='black', histtype='step',orientation='horizontal',normed=True,weights=weighted)
+axHistX.hist(x,color='black',histtype='step',bins=BINS,weights=weighted,range=[TQMIN,TQMAX])
+axHistY.hist(y,color='black',histtype='step',orientation='horizontal',bins=BINS,weights=weighted,range=[TAUMIN,TAUMAX])
 
 plt.savefig('feature.pdf')
