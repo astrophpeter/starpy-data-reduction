@@ -26,8 +26,8 @@ TQMIN = 0
 TQMAX = 14
 
 #redshift cut
-zmask1 = master['z_peak'] > 0.0
-zmask2 = master['z_peak'] < 0.5
+zmask1 = master['z_peak'] > 0.5
+zmask2 = master['z_peak'] < 1.0
 #s/n >5
 usemask = master['USE_1'] == 1
 mask = (zmask1 == 1) & (zmask2 == 1) & (usemask == 1)
@@ -44,14 +44,7 @@ dict = dict(zip(master['ID'],numpy.arange(len(master['ID']))))
 #print(master['z_peak'][dict[195754]])
 
 #initalize output data
-sampleWeightByFeature = numpy.zeros((40000,2))
 H = N.zeros((BINS,BINS))
-
-#fence post
-#i = master['ID'][0]
-#filenameSample ='samples_' + str(i) + '_' + str(master['ra'][dict[i]]) + '_' + str(master['dec'][dict[i]]) + '.npy'
-#sample = numpy.load('../dataout/samples/'+ filenameSample)
-#total =  master[featureCol][dict[i]]*sample
 
 #iterate over all sample
 for i in master['ID']:
