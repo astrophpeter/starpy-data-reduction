@@ -10,17 +10,21 @@ import numpy as N
 smoothCol= 't01_smooth_or_features_a01_smooth_weighted_fraction'
 featureCol = 't01_smooth_or_features_a02_features_or_disk_weighted_fraction'
 master = Table.read('GZ+UVISTA.fits',format='fits')
-BINS = 250
+BINS = 150
 PROB = N.log(0.2)
+TAUMIN = 0
+TAUMAX = 4
+TQMIN = 0
+TQMAX = 14
 
 #redshift cut
-zmask1 = master['z_peak'] > 0.0
-zmask2 = master['z_peak'] < 0.5
+#zmask1 = master['z_peak'] > 0.0
+#zmask2 = master['z_peak'] < 0.5
 #s/n >5
-usemask = master['USE_1'] == 1
-mask = (zmask1 == 1) & (zmask2 == 1) & (usemask == 1)
+#usemask = master['USE_1'] == 1
+#mask = (zmask1 == 1) & (zmask2 == 1) & (usemask == 1)
 
-master = master[mask]
+#master = master[mask]
 
 
 #for monitering progress out ouput.
@@ -66,12 +70,12 @@ for i in master['ID']:
      y = samp[1:2].flatten()
      
      #calaculate normalised bin heights for walkers in one sample, weight by lnprob.
-     Hcurrent =  N.histogram2d(x, y, range=[[0,14],[0,5.0]],bins=BINS,weights=N.exp(lnprob[:]),normed=True)[0]
+     Hcurrent =  N.histogram2d(x, y, range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=BINS,weights=N.exp(lnprob[:]),normed=True)[0]
      
-     #remove extreme outlier bing hieghts
-     if Hcurrent.max() < 200:
-        H +=  master[smoothCol][dict[i]]*Hcurrent
-        j = j +1
+     #remove extreme outlier bing hieghts:
+     if Hcurrent.max() <200:
+        H+= master[smoothCol][dict[i]]*Hcurrent
+     j = j +1
 
 
  
