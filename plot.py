@@ -19,7 +19,7 @@ from smooth import smooth
 #definelims
 TAUMAX = 4
 TAUMIN = 0
-TQMAX = 5
+TQMAX = 10
 TQMIN = 0
 BINS = 200
 
@@ -32,7 +32,7 @@ y = dat[1:2].flatten()
 
 
 
-weighted = N.load('out.npy')
+weighted = N.load('z-0.5-1.0-low-del.npy')
 #tq_mcmc, tau_mcmc,  = map(lambda v: (v[1], v[2]-v[1], v[1]-v[0]), zip(*N.percentile(samples, [16,50,84],axis=0    )))
 
 
@@ -73,7 +73,8 @@ axHistY.yaxis.set_major_formatter( NullFormatter() )
 #print(x)
 #plot histogram
 c.hist2d(x,y,ax=axScatter,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=BINS,max_n_ticks=8,normed=True,smooth=2)
-
+axScatter.text(0.5,0.5,r'$0.5<z<1.0$')
+axScatter.text(0.5,0.3,r'$\log(1+\delta)<-0.25$')
 
 #axScatter.hist2d(x,y,weights=weighted,range=[[TQMIN,TQMAX],[TAUMIN,TAUMAX]],bins=150,normed=True)
 #axScatter.plot([tq_mcmc[0],tq_mcmc[0]],[0,5],color='blue')
@@ -90,4 +91,4 @@ axHistX.plot(N.arange(TQMAX/BINS,TQMAX + TQMAX/BINS,TQMAX/BINS),xweights,color='
 #axHistX.hist(x,color='black',histtype='step',bins=BINS,weights=xweights,range=[TQMIN,TQMAX])
 #axHistY.hist(y,color='black',histtype='step',orientation='horizontal',bins=BINS,weights=yweights,range=[TAUMIN,TAUMAX])
 
-plt.savefig('red-smooth-VmJ-z-0-0.5.pdf')
+plt.savefig('z-0.5-1.0-low-del.pdf')
